@@ -9,12 +9,32 @@ const Item = styled.li`
 `;
 
 function Navigation ({links}) {
+
+  const handleItemClick = () => {
+    console.log('Item click');
+  }
+
+  const handleLinkClick = (e) => {
+    e.preventDefault();
+    console.log(e);
+    console.log('CLICK');
+  }
+
+  const handleLinkMouseEnter = (e)=>{
+    console.log(e);
+    console.log('ENTER');
+  }
+
   return (
     <nav>
       <List>
         {links?.map(({id, label}) => (
-          <Item key={id}>
-            <a href='/'>{label}</a>
+          <Item key={id} onClick={handleItemClick}>
+            <a 
+            href='/' 
+            onClick={handleLinkClick} 
+            onMouseEnter={handleLinkMouseEnter}
+            >{label}</a>
           </Item>)
         )}
       </List>
