@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const List = styled.ul`
   display: flex;
@@ -15,9 +16,7 @@ function Navigation ({links}) {
   }
 
   const handleLinkClick = (e) => {
-    e.preventDefault();
-    console.log(e);
-    console.log('CLICK');
+    console.log('link to:', e.target);
   }
 
   const handleLinkMouseEnter = (e)=>{
@@ -28,13 +27,13 @@ function Navigation ({links}) {
   return (
     <nav>
       <List>
-        {links?.map(({id, label}) => (
+        {links?.map(({id, label, path}) => (
           <Item key={id} onClick={handleItemClick}>
-            <a 
-            href='/' 
-            onClick={handleLinkClick} 
-            onMouseEnter={handleLinkMouseEnter}
-            >{label}</a>
+            <Link 
+              to={`/${path}`}
+              onClick={handleLinkClick} 
+              onMouseEnter={handleLinkMouseEnter}
+            >{label}</Link>
           </Item>)
         )}
       </List>
