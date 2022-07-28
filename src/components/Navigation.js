@@ -16,12 +16,12 @@ function Navigation ({links}) {
   }
 
   const handleLinkClick = (e) => {
-    console.log('link to:', e.target);
+    // console.log('link to:', e.target);
   }
 
   const handleLinkMouseEnter = (e)=>{
-    console.log(e);
-    console.log('ENTER');
+    // console.log(e);
+    // console.log('ENTER');
   }
 
   return (
