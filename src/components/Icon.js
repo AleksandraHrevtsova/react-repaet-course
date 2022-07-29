@@ -11,6 +11,7 @@ export function Icon ({iconId, iconColor, width, height, iconClass}){
     </>
   )
 }
+
 Icon.defaultProps = {
   iconColor: 'grey',
   width: '24px',

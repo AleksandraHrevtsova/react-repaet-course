@@ -8,7 +8,6 @@ import { WhatWeDo } from './pages/What_we_do';
 import { AboutUs } from './pages/About_us';
 import { GetInTouch } from './pages/Get-in_touch';
 import { OurWork } from './pages/Our_work';
-import { Button } from './components/Button'
 
 const navLinks = [
   {id: '1', label: 'Our work', path: 'our-work'},
@@ -24,26 +23,11 @@ const PageWrapper = styled.div`
 `;
 
 function App() {
-  // ===== CONSTANTS
-  const API_KEY = '563492ad6f91700001000001390f9fee0a794c1182a72e49e0e0eae2';
-  const BASE_URL = 'https://api.pexels.com/v1/';
-  const endpoint = 'search';
-  const options = {
-    // method: 'GET', // POST | PUT | PATCH | DELETE
-    headers: {
-      Authorization: API_KEY
-    },
-    // body: {}; // if POST | PUT | PATCH
-  }
-  // fetch(url, options).then(() => {}).then(() => {})
-  // ===== CONSTANTS
-
   // ===== STATE
   const [currentState, setCurrentState] = useState('start');
   const [userName, setUserName] = useState('Sandra');
   const [isOnline, setIsOnline] = useState(true);
-  const [search, setSearch] = useState(null);
-  const [kittens, setKittens] = useState([]);
+
   // ===== STATE
 
   // ===== EFFECTS
@@ -59,13 +43,6 @@ function App() {
     // console.log('IsOnline:', isOnline);
   }, [isOnline]);
 
-  useEffect(() => {
-    // console.log('search:', search);
-  }, [search]);
-
-  useEffect(() => {
-    console.log('KITTENS:', kittens);
-  }, [kittens]);
   // ====== EFFECTS
 
   // ====== METHODS
@@ -78,44 +55,18 @@ function App() {
     setIsOnline(!isOnline);
   }
 
-  const searchValue = () => {
-    if(search){
-      // console.log('SEARCH');
-      let params = `?query=${search}&orientaion=portrait&size=small&per_page=5`;
-      const url = BASE_URL + endpoint + params;
-      // console.log('url:', url);
-      fetch(url, options).then((response) => {
-        console.log('serponse:', response);
-        return response.json();
-      }).then((data) => {
-        console.log('data:', data);
-        return data.photos
-      }).then((kittens) => {
-        setKittens(kittens); // rewrite
-        // setKittents((prev)=>{ return [...prev, ...kittens] }) // add new kittens 
-      })
-    }
-  }
-
-  const handleInputChange = (e) => {
-    setSearch(e.target.value)
-  }
   // ====== METHODS
 
   return (
     <PageWrapper>
       <Header x={navLinks}/>
       <main style={{flex: '1 0 auto'}}>
-        <section>
-          <input placeholder='enter value' onChange={handleInputChange}/>
-          <Button type='submit' label='search' handleClick={searchValue}/>
-        </section>
         {/* <Button label='click' handleClick={toggleStatusIsOnline}/> */}
         <Routes>
           <Route exact path='/' element={<Home/>}/>
           <Route path='/about-us' element={<AboutUs/>}/>
           <Route path='/what-we-do' element={<WhatWeDo/>}/>
-          <Route path='/our-work' element={<OurWork kittens={kittens}/>}/>
+          <Route path='/our-work' element={<OurWork/>}/>
           <Route path='/get-in-touch' element={<GetInTouch/>}/>
         </Routes>
       </main>

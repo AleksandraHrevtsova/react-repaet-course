@@ -8,7 +8,10 @@ const commonStyles = `
  line-height: 1.56;
  padding: 8px 32px;
  border-radius: 4px;
- :hover{
+ :disabled {
+  background-color: grey;
+ }
+ :not(:disabled):hover{
   background-color: #fff;
   color: #000;
   transition: all 0.5s;
@@ -27,15 +30,18 @@ const StyledLinkButton = styled.a`
   text-decoration: underline;
 `;
 
-export function Button ({type, label, handleClick}) {
+export function Button ({isDisabled, type, label, handleClick}) {
+  const disabled = isDisabled === undefined ? false : isDisabled;
   return (
-    <StyledButton type={type ?? 'button'} onClick={handleClick}>{label}</StyledButton>
+    <StyledButton disabled={disabled} type={type ?? 'button'} onClick={handleClick}>{label}</StyledButton>
   )
 }
 
-export function IconButton ({iconId, label}) {
+export function IconButton ({isDisabled, type, iconId, label, handleClick}) {
+  const disabled = isDisabled === undefined ? false : isDisabled;
+  // console.log('disabled:', isDisabled,disabled);
   return (
-    <StyledButton>
+    <StyledButton disabled={disabled} type={type ?? 'button'} onClick={handleClick}>
       {label}
       <Icon iconId={iconId}/>
     </StyledButton>
