@@ -25,7 +25,7 @@ export function WhatWeDo(){
   }, [search]);
 
   useEffect(() => {
-    console.log('KITTENS:', kittens);
+    // console.log('KITTENS:', kittens);
   }, [kittens]);
 
   const handleInputChange = (e) => {
@@ -33,6 +33,8 @@ export function WhatWeDo(){
   }
 
   const searchValue = () => {
+    console.log("search:",search);
+    console.log('data before request:', kittens);
     if(search){
       // console.log('SEARCH');
       let params = `?query=${search}&orientaion=portrait&size=small&per_page=5`;
@@ -48,12 +50,16 @@ export function WhatWeDo(){
         setKittens(kittens); // rewrite
         // setKittents((prev)=>{ return [...prev, ...kittens] }) // add new kittens 
       })
+    console.log('data AFTER request:', kittens);
+
     }
+    console.log('data after request:', kittens);
   }
 
   return (
     <>
       <section>
+        <h1>{search || 'SEARCH'}</h1>
         {/* onChange={handleInputChange} === input,addEventListener('change', handleInputChange) */}
         <InputText placeholder='enter value' handleChange={handleInputChange} xxx='111'/>
         <Button type='submit' label='search' handleClick={searchValue}/>

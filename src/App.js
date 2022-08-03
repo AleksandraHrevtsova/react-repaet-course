@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from './contexts/AppContext';
+import { ThemeContext } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import styled from 'styled-components';
@@ -8,6 +10,7 @@ import { WhatWeDo } from './pages/What_we_do';
 import { AboutUs } from './pages/About_us';
 import { GetInTouch } from './pages/Get-in_touch';
 import { OurWork } from './pages/Our_work';
+import { allStyles } from './layout/styles';
 
 const navLinks = [
   {id: '1', label: 'Our work', path: 'our-work'},
@@ -23,16 +26,19 @@ const PageWrapper = styled.div`
 `;
 
 function App() {
-  // ===== STATE
+  const initialAppContext = useContext(AppContext)
+
   const [currentState, setCurrentState] = useState('start');
   const [userName, setUserName] = useState('Sandra');
   const [isOnline, setIsOnline] = useState(true);
+  const [currentAppContext, setCurrentAppContext] = useState(initialAppContext)
 
-  // ===== STATE
-
-  // ===== EFFECTS
   useEffect(() => {
-    // console.log('Use Effect INITIAL LOAD');
+    const context = setAppContext();
+    setCurrentAppContext((prev) => ({
+      ...prev,
+      ...context
+    }))
   }, []); // first-render
 
   useEffect(() => {
@@ -43,9 +49,15 @@ function App() {
     // console.log('IsOnline:', isOnline);
   }, [isOnline]);
 
-  // ====== EFFECTS
+  function setAppContext () {
+    return {
+      navLinks,
+      user: {
+        name: 'Sandra'
+      }
+    }
+  }
 
-  // ====== METHODS
   const updateState = () => {
     // console.log('Click');
     setCurrentState('stop')
@@ -55,13 +67,12 @@ function App() {
     setIsOnline(!isOnline);
   }
 
-  // ====== METHODS
-
   return (
+    <AppContext.Provider value={currentAppContext}>
+      <ThemeContext.Provider value={allStyles}>
     <PageWrapper>
-      <Header x={navLinks}/>
+      <Header />
       <main style={{flex: '1 0 auto'}}>
-        {/* <Button label='click' handleClick={toggleStatusIsOnline}/> */}
         <Routes>
           <Route exact path='/' element={<Home/>}/>
           <Route path='/about-us' element={<AboutUs/>}/>
@@ -72,6 +83,8 @@ function App() {
       </main>
       <Footer/>
     </PageWrapper>
+      </ThemeContext.Provider>
+    </AppContext.Provider>
   );
 }
 

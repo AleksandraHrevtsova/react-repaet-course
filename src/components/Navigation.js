@@ -1,18 +1,39 @@
+import { useContext } from 'react';
+import { AppContext } from '../contexts/AppContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+const StyledNav = styled.nav`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledUserGreet = styled.div`
+  margin-right: 30px;
+  color: pink;
+  font-weight: 500;
+`;
 
 const List = styled.ul`
   display: flex;
 `;
 
 const Item = styled.li`
-  margin-right: 30px;
+  margin-right: ${({styles}) => styles.itemMarginRight};
+  color: ${({colors}) => colors.black};
+  :hover{
+    color: ${({colors}) => colors.hoverLinkColor};
+  }
 `;
 
-function Navigation ({links}) {
+function Navigation () {
+
+  const {navLinks, user} = useContext(AppContext);
+  const {colors, styles} = useContext(ThemeContext);
 
   const handleItemClick = () => {
-    console.log('Item click');
+    // console.log('Item click');
   }
 
   const handleLinkClick = (e) => {
@@ -25,10 +46,13 @@ function Navigation ({links}) {
   }
 
   return (
-    <nav>
+    <StyledNav>
+      <StyledUserGreet>
+        Hello, {user?.name}
+      </StyledUserGreet>
       <List>
-        {links?.map(({id, label, path}) => (
-          <Item key={id} onClick={handleItemClick}>
+        {navLinks?.map(({id, label, path}) => (
+          <Item key={id} onClick={handleItemClick} styles={styles} colors={colors}>
             <Link 
               to={`/${path}`}
               onClick={handleLinkClick} 
@@ -37,7 +61,7 @@ function Navigation ({links}) {
           </Item>)
         )}
       </List>
-    </nav>
+    </StyledNav>
   )
 }
 
