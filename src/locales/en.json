@@ -4,5 +4,9 @@
   "about_us": "About us",
   "what_we_do": "What we do",
   "get_in_touch": "Get in touch",
-  "hero_title": "We're a multi-disciplinary design studio that helps brands thrive."
+  "hero_title": "We're a multi-disciplinary design studio that helps brands thrive.",
+  "en_lang": "English",
+  "uk_lang": "Ukrainian",
+  "de_lang": "German",
+  "ru_lang": "russian"
 }

@@ -1,12 +1,9 @@
-import * as locales from './locales';
+import * as localesModule from './locales';
+const locales = {...localesModule};
+const { navigator: {language, languages} } = window;
 
-export function getLangFromBrowser(){
-  return window.navigator.language;
-}
-
-export function checkLangFromBrowserList(){
-  return window.navigator.languages.find(lang => locales[lang])
-}
+const langFromBrowser = Object.keys(locales).find((localeCode) => language.includes(localeCode))
+const langFromBrowserList = Object.keys(locales).find((locale) => languages.find(lang => lang).includes(locale))
 
 export function getLangFromLocalStorage(){
   return localStorage.getItem('lang')
@@ -15,36 +12,33 @@ export function getLangFromLocalStorage(){
 export function getInitLang(){
   let lsLang = getLangFromLocalStorage();
   lsLang = lsLang === 'ua' ? 'uk' : lsLang
-  // console.log('lsLang:', lsLang); // null
-  if(locales[lsLang]){
-    return lsLang
-  }
-
-  const browserLang = getLangFromBrowser();
-  // console.log('browserLang:', browserLang); 
-  if(locales[browserLang]){
-    return browserLang
-  }
-
-  const checkedLangFromBrowser = checkLangFromBrowserList();
-  // console.log('checkedLangFromBrowser:', checkedLangFromBrowser); 
-  if(locales[checkedLangFromBrowser]){
-    return checkedLangFromBrowser
-  }
-
+  if(locales[lsLang]) return lsLang;
+  if(langFromBrowser) return langFromBrowser;
+  if(langFromBrowserList) return langFromBrowserList;
   return 'en'
 }
 
 export const lang = getInitLang();
-// console.log('LANG:', lang);
 
 function getLocalesByLang(lang) {
   return locales[lang]
 }
-const currentLocales = getLocalesByLang(lang);
-// console.log('result:', result);
 
-export function getLocale(key){
-  // console.log('currentLocales[key]:', currentLocales[key]);
-  return currentLocales[key] || key
+const currentLocales = getLocalesByLang(lang);
+
+export const getLocale = (key) => currentLocales[key] || key;
+
+export const setSelectedLanguage = (e) => {
+  console.log(e);
+  if (e.target.id === 'options-view-button') return;
+  localStorage.setItem('lang', e.target.value)
+  window.location.reload();
 }
+
+export const availableLanguages = Object.keys(locales).map((langCode) => {
+  return {
+    langCode,
+    label: getLocale(`${langCode}_lang`)
+  }
+});
+
