@@ -19,13 +19,14 @@ const StyledInput = styled.input`
   }
 `;
 
-export function InputText({type, name, placeholder, handleChange}){
+export function InputText({type, name, placeholder, handleChange, inputRef}){
   return (
-    <StyledInput type={type ?? 'text'} 
-    name={name} placeholder={placeholder} 
-    onChange={handleChange}/>
+    <StyledInput 
+      type={type ?? 'text'} 
+      name={name} 
+      placeholder={placeholder} 
+      onChange={handleChange}
+      ref={inputRef}
+    />
   )
 }
-
-// throttle(cb, ms) => |...ms...|...ms|...
-// debounce(cb, ms) => ...ms...|...ms...|...
