@@ -48,11 +48,13 @@ a {
   text-decoration: none;
   display: inline-block;
   color: inherit;
+  cursor: pointer;
 }
 
 button {
   background-color: transparent;
   border: none;
+  cursor: pointer;
 }
 
 .icon {
